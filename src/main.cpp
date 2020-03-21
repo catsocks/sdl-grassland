@@ -97,31 +97,36 @@ int main() {
     // Show the window after most costly initial operations are done.
     SDL_ShowWindow(window);
 
-    // TODO: Remove weak width and height assumptions.
-    Grid grid(tilemaps.at("background").width,
-              tilemaps.at("background").height);
-    set_grid_obstacles(grid, tilemaps.at("obstacles"));
+    uint32_t ticks = 0; // for calculating delta time
+
+    // Begin defining the game state.
+
+    Grid grid(tilemaps.at("background"));
+    grid.set_obstacles(tilemaps.at("obstacles"));
 
     // Create sprites.
-    Sprite girl{16 * TILE_WIDTH, 16 * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT};
+    Vector2 tile_size{TILE_WIDTH, TILE_HEIGHT};
+
+    Sprite girl(Vector2{16, 16} * tile_size, tile_size);
+    Sprite npc(Vector2{17, 2} * tile_size, tile_size);
+
     girl.kind = Sprite::Kind::girl;
-    Sprite npc{17 * TILE_WIDTH, 2 * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT};
 
     girl.set_texture(renderer, tilesets.at("girl"));
     npc.set_texture(renderer, tilesets.at("npc"));
 
-    World world(background.surface->w, background.surface->h);
+    World world(grid.get_size() * tile_size);
     world.grid = &grid;
-    world.sprites = std::vector<Sprite *>{&girl, &npc};
+    world.sprites.insert(world.sprites.end(), {&girl, &npc});
 
-    // Create camera that targets the girl sprite.
-    Rect camera{0, 0, RENDERER_WIDTH, RENDERER_HEIGHT};
+    // The camera will target the girl sprite.
+    Rect camera(0, 0, RENDERER_WIDTH, RENDERER_HEIGHT);
 
-    uint32_t ticks = 0;
     while (true) {
+        // Calculate delta time in seconds.
         uint32_t last_ticks = ticks;
         ticks = SDL_GetTicks();
-        float dt = static_cast<float>(ticks - last_ticks) / 1000; // delta ticks
+        float dt = static_cast<float>(ticks - last_ticks) / 1000;
 
         if (SDL_QuitRequested()) {
             break;

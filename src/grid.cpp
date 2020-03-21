@@ -1,11 +1,18 @@
 #include "grid.hpp"
 
+constexpr std::array<Location, 4> DIRECTIONS = {
+    Location{1, 0}, Location{0, -1}, Location{-1, 0}, Location{0, 1}};
+
 bool operator==(Location a, Location b) { return a.x == b.x && a.y == b.y; }
 
 bool operator!=(Location a, Location b) { return !(a == b); }
 
 bool operator<(Location a, Location b) {
     return std::tie(a.x, a.y) < std::tie(b.x, b.y);
+}
+
+Location make_location(const Rect &r) {
+    return {static_cast<int>(r.x) / r.width, static_cast<int>(r.y) / r.height};
 }
 
 bool Grid::in_bounds(Location id) const {
@@ -34,15 +41,19 @@ std::vector<Location> Grid::neighbors(Location id) const {
     return results;
 }
 
-void set_grid_obstacles(Grid &grid, Tilemap &tilemap) {
+void Grid::set_obstacles(Tilemap &tilemap) {
     for (int x = 0; x < tilemap.width; x++) {
         for (int y = 0; y < tilemap.height; y++) {
             auto tile = tilemap.at(x, y);
             if (tile.has_value()) {
-                grid.obstacles.insert(Location{x, y});
+                obstacles.insert(Location{x, y});
             }
         }
     }
+}
+
+Vector2 Grid::get_size() const {
+    return {static_cast<float>(width), static_cast<float>(height)};
 }
 
 std::unordered_map<Location, Location>

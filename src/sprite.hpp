@@ -24,8 +24,8 @@ class Sprite {
 
     SDL_Texture *texture{};
 
-    Sprite(float x, float y, int width, int height)
-        : rect({x, y, width, height}), dest(rect) {}
+    Sprite(const Vector2 &pos, const Vector2 &size)
+        : rect(pos, size), dest(rect) {}
 
     void set_texture(SDL_Renderer *renderer, Tileset &ts);
 

@@ -11,6 +11,10 @@ float move_towards(float a, float b, float max_delta) {
     return a + sign(b - a) * max_delta;
 }
 
+Vector2 Vector2::operator*(const Vector2 &v) const {
+    return {x * v.x, y * v.y};
+}
+
 Rect Rect::move(const Rect &r) const {
     return {x - r.x, y - r.y, width, height};
 }
@@ -73,13 +77,11 @@ Vector2 Rect::distance(const Rect &r) const {
     return {abs(x - r.x), abs(y - r.y)};
 }
 
-// bool Rect::operator ==(const Rect &r) const {
-//     return (x == r.x && y == r.y && width == r.width && height == r.height);
-// }
-
-bool Rect::operator!=(const Rect &r) const {
-    return (x != r.x || y != r.y || width != r.width || height != r.height);
+bool Rect::operator==(const Rect &r) const {
+    return (x == r.x && y == r.y && width == r.width && height == r.height);
 }
+
+bool Rect::operator!=(const Rect &r) const { return !(*this == r); }
 
 Rect::operator SDL_Rect() const {
     return {static_cast<int>(x), static_cast<int>(y), width, height};

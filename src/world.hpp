@@ -1,4 +1,3 @@
-// TODO: Can the usage of raw pointers be avoided?
 #pragma once
 #include "grid.hpp"
 #include "math.hpp"
@@ -13,5 +12,5 @@ struct World {
     Grid *grid{};
     std::vector<Sprite *> sprites;
 
-    World(int width, int height) : rect({0, 0, width, height}) {}
+    World(const Vector2 &size) : rect({}, size) {}
 };

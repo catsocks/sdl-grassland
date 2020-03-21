@@ -19,30 +19,30 @@ bool operator==(Location a, Location b);
 bool operator!=(Location a, Location b);
 bool operator<(Location a, Location b);
 
+Location make_location(const Rect &r);
+
 // Implement hash function so Location can be put into an unordered_set.
 namespace std {
     template <> struct hash<Location> {
-        std::size_t operator()(const Location &id) const noexcept {
-            return std::hash<int>()(id.x ^ (id.y << 4));
+        size_t operator()(const Location &id) const noexcept {
+            return hash<int>()(id.x ^ (id.y << 4));
         }
     };
 }
 
 struct Grid {
-    static constexpr std::array<Location, 4> DIRECTIONS = {
-        Location{1, 0}, Location{0, -1}, Location{-1, 0}, Location{0, 1}};
-
     int width{}, height{};
     std::unordered_set<Location> obstacles;
 
-    Grid(int width, int height) : width(width), height(height) {}
+    Grid(const Tilemap &base) : width(base.width), height(base.height) {}
 
     bool in_bounds(Location id) const;
     bool passable(Location id) const;
     std::vector<Location> neighbors(Location id) const;
-};
 
-void set_grid_obstacles(Grid &grid, Tilemap &tilemap);
+    void set_obstacles(Tilemap &tilemap);
+    Vector2 get_size() const;
+};
 
 std::unordered_map<Location, Location>
 breadth_first_search(const Grid &grid, Location start, Location goal);

@@ -53,10 +53,10 @@ void Sprite::move(World &world, Direction dir, bool ignore_obstacles) {
 
     Rect new_dest = rect;
     switch (dir) {
-    case Direction::down: new_dest.y += rect.height; break;
-    case Direction::left: new_dest.x -= rect.width; break;
-    case Direction::right: new_dest.x += rect.width; break;
-    case Direction::up: new_dest.y -= rect.height; break;
+    case Direction::down: new_dest.y += new_dest.height; break;
+    case Direction::left: new_dest.x -= new_dest.width; break;
+    case Direction::right: new_dest.x += new_dest.width; break;
+    case Direction::up: new_dest.y -= new_dest.height; break;
     }
 
     if (!world.rect.fits_within(new_dest)) {
@@ -76,9 +76,7 @@ void Sprite::move(World &world, Direction dir, bool ignore_obstacles) {
     }
 
     if (!ignore_obstacles) {
-        // TODO: Remove weak width and height assumptions.
-        Location new_loc{static_cast<int>(new_dest.x) / rect.width,
-                         static_cast<int>(new_dest.y) / rect.height};
+        auto new_loc = make_location(new_dest);
         if (!world.grid->passable(new_loc)) {
             look(dir, true);
             return;
@@ -90,7 +88,6 @@ void Sprite::move(World &world, Direction dir, bool ignore_obstacles) {
     walk_cycle = (walk_cycle + 1) % WALK_CYCLES;
 }
 
-// TODO: Improve this.
 void Sprite::move(World &world, const Sprite &target) {
     if (rect != dest) {
         return;
@@ -100,11 +97,8 @@ void Sprite::move(World &world, const Sprite &target) {
         return;
     }
 
-    // TODO: Remove weak width and height assumptions.
-    Location start{static_cast<int>(dest.x) / rect.width,
-                   static_cast<int>(dest.y) / rect.height};
-    Location goal{static_cast<int>(target.dest.x) / rect.width,
-                  static_cast<int>(target.dest.y) / rect.height};
+    auto start = make_location(dest);
+    auto goal = make_location(target.dest);
 
     auto came_from = breadth_first_search(*world.grid, start, goal);
     auto path = reconstruct_path(start, goal, came_from);
@@ -115,7 +109,6 @@ void Sprite::move(World &world, const Sprite &target) {
     }
 
     auto next_loc = path.begin();
-    // TODO: Remove weak width and height assumptions.
     if (next_loc->x * rect.width > rect.x) {
         move(world, Direction::right, true);
     } else if (rect.x > next_loc->x * rect.width) {
@@ -137,10 +130,9 @@ void Sprite::update(float dt) {
 }
 
 void Sprite::draw(SDL_Renderer *renderer, const Rect &camera) {
-    // TODO: Remove weak width and height assumptions.
-    SDL_Rect src = {walk_cycle * rect.width,
-                    rect.height * static_cast<int>(direction), rect.width,
-                    rect.height};
+    SDL_Rect src{walk_cycle * rect.width,
+                 rect.height * static_cast<int>(direction), rect.width,
+                 rect.height};
 
     SDL_Rect renderer_dest = rect.move(camera);
     SDL_RenderCopy(renderer, texture, &src, &renderer_dest);
