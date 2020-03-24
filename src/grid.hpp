@@ -34,7 +34,7 @@ struct Grid {
     int width{}, height{};
     std::unordered_set<Location> obstacles;
 
-    Grid(const Tilemap &base) : width(base.width), height(base.height) {}
+    Grid(const Tilemap &base);
 
     bool in_bounds(Location id) const;
     bool passable(Location id) const;

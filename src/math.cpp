@@ -15,6 +15,12 @@ Vector2 Vector2::operator*(const Vector2 &v) const {
     return {x * v.x, y * v.y};
 }
 
+Rect::Rect(float x, float y, int width, int height)
+    : x(x), y(y), width(width), height(height) {}
+
+Rect::Rect(const Vector2 &pos, const Vector2 &size)
+    : x(pos.x), y(pos.y), width(size.x), height(size.y) {}
+
 Rect Rect::move(const Rect &r) const {
     return {x - r.x, y - r.y, width, height};
 }

@@ -1,5 +1,8 @@
 #include "sprite.hpp"
 
+Sprite::Sprite(const Vector2 &pos, const Vector2 &size)
+    : rect(pos, size), dest(rect) {}
+
 void Sprite::set_texture(SDL_Renderer *renderer, Tileset &ts) {
     texture = SDL_CreateTextureFromSurface(renderer, ts.image);
     if (!texture) {

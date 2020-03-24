@@ -12,11 +12,8 @@ struct Rect {
     float x{}, y{};
     int width{}, height{};
 
-    Rect(float x, float y, int width, int height)
-        : x(x), y(y), width(width), height(height) {}
-
-    Rect(const Vector2 &pos, const Vector2 &size)
-        : x(pos.x), y(pos.y), width(size.x), height(size.y) {}
+    Rect(float x, float y, int width, int height);
+    Rect(const Vector2 &pos, const Vector2 &size);
 
     Rect move(const Rect &r) const;
     Rect center(const Rect &r) const;

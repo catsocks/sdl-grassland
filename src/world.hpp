@@ -12,5 +12,5 @@ struct World {
     Grid *grid{};
     std::vector<Sprite *> sprites;
 
-    World(const Vector2 &size) : rect({}, size) {}
+    World(const Vector2 &size);
 };

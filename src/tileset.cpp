@@ -1,5 +1,8 @@
 #include "tileset.hpp"
 
+Tileset::Tileset(int tile_width, int tile_height)
+    : tile_width(tile_width), tile_height(tile_height) {}
+
 void Tileset::set_image(SDL_Surface *surface) {
     image = surface;
     cols = surface->w / tile_width;

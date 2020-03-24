@@ -15,8 +15,7 @@ class Tileset {
     int tile_width{}, tile_height{};
     SDL_Surface *image{};
 
-    Tileset(int tile_width, int tile_height)
-        : tile_width(tile_width), tile_height(tile_height) {}
+    Tileset(int tile_width, int tile_height);
 
     void set_image(SDL_Surface *surface);
 

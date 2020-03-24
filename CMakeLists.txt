@@ -18,6 +18,7 @@ add_executable(${PROJECT_NAME}
     src/sprite.cpp
     src/tilemap.cpp
     src/tileset.cpp
+    src/world.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})

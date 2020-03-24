@@ -15,6 +15,8 @@ Location make_location(const Rect &r) {
     return {static_cast<int>(r.x) / r.width, static_cast<int>(r.y) / r.height};
 }
 
+Grid::Grid(const Tilemap &base) : width(base.width), height(base.height) {}
+
 bool Grid::in_bounds(Location id) const {
     return 0 <= id.x && id.x < width && 0 <= id.y && id.y < height;
 }

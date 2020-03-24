@@ -27,7 +27,7 @@ struct TilemapRender {
     SDL_Surface *surface;
     SDL_Texture *texture;
 
-    TilemapRender() : surface(nullptr), texture(nullptr) {}
+    TilemapRender();
 
     void draw(SDL_Renderer *renderer, const Rect &camera);
 };
