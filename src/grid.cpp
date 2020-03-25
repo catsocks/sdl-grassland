@@ -28,7 +28,7 @@ bool Grid::passable(Location id) const {
 std::vector<Location> Grid::neighbors(Location id) const {
     std::vector<Location> results;
 
-    for (Location dir : DIRECTIONS) {
+    for (auto dir : DIRECTIONS) {
         Location next{id.x + dir.x, id.y + dir.y};
         if (in_bounds(next) && passable(next)) {
             results.push_back(next);
@@ -67,14 +67,14 @@ breadth_first_search(const Grid &grid, Location start, Location goal) {
     came_from[start] = start;
 
     while (!frontier.empty()) {
-        Location current = frontier.front();
+        auto current = frontier.front();
         frontier.pop();
 
         if (current == goal) {
             break;
         }
 
-        for (Location next : grid.neighbors(current)) {
+        for (auto next : grid.neighbors(current)) {
             if (came_from.find(next) == came_from.end()) {
                 frontier.push(next);
                 came_from[next] = current;

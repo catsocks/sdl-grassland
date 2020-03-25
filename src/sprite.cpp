@@ -54,7 +54,7 @@ void Sprite::move(World &world, Direction dir, bool ignore_obstacles) {
         return;
     }
 
-    Rect new_dest = rect;
+    auto new_dest = rect;
     switch (dir) {
     case Direction::down: new_dest.y += new_dest.height; break;
     case Direction::left: new_dest.x -= new_dest.width; break;
@@ -70,7 +70,7 @@ void Sprite::move(World &world, Direction dir, bool ignore_obstacles) {
     // TODO: Make this part of Grid's passable member.
     // TODO: Remove weak assumption that kind member will be unique among
     // sprites.
-    for (auto s : world.sprites) {
+    for (auto &s : world.sprites) {
         if (s->kind != kind && s->dest.x == new_dest.x &&
             s->dest.y == new_dest.y) {
             look(dir, true);

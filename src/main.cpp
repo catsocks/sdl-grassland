@@ -162,7 +162,7 @@ int main() {
     // Clean up.
 
     // Free tileset images.
-    for (auto [key, val] : tilesets) {
+    for (auto &[key, val] : tilesets) {
         SDL_FreeSurface(val.image);
     }
 

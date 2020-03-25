@@ -65,8 +65,8 @@ TilemapRender render_tilemap(SDL_Renderer *renderer, Tilemap &tm, Tileset &ts) {
             auto tile = tm.at(x, y);
             if (tile.has_value()) {
                 auto src = ts.at(tile.value());
-                SDL_Rect dest = {x * src.w, y * src.h, ts.tile_width,
-                                 ts.tile_height};
+                SDL_Rect dest{x * src.w, y * src.h, ts.tile_width,
+                              ts.tile_height};
                 SDL_BlitSurface(ts.image, &src, render.surface, &dest);
             }
         }

@@ -19,7 +19,7 @@ SDL_Rect Tileset::at(int index) {
 
 Tileset load_tileset(const fs::path &path, int tile_width, int tile_height) {
     Tileset tileset(tile_width, tile_height);
-    SDL_Surface *surface = IMG_Load(path.c_str());
+    auto surface = IMG_Load(path.c_str());
     if (!surface) {
         throw std::runtime_error(std::string("Couldn't load tileset image: ") +
                                  IMG_GetError());
