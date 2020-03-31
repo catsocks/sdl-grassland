@@ -21,7 +21,7 @@ Rect::Rect(float x, float y, int width, int height)
 Rect::Rect(const Vector2 &pos, const Vector2 &size)
     : x(pos.x), y(pos.y), width(size.x), height(size.y) {}
 
-Rect Rect::move(const Rect &r) const {
+Rect Rect::move_inverse(const Rect &r) const {
     return {x - r.x, y - r.y, width, height};
 }
 

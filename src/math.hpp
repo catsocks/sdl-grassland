@@ -15,7 +15,7 @@ struct Rect {
     Rect(float x, float y, int width, int height);
     Rect(const Vector2 &pos, const Vector2 &size);
 
-    Rect move(const Rect &r) const;
+    Rect move_inverse(const Rect &r) const;
     Rect center(const Rect &r) const;
     Rect clamp(const Rect &r) const;
     Rect move_towards(const Rect &r, float max_dist_delta) const;

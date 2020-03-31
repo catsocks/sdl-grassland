@@ -137,6 +137,6 @@ void Sprite::draw(SDL_Renderer *renderer, const Rect &camera) {
                  rect.height * static_cast<int>(direction), rect.width,
                  rect.height};
 
-    SDL_Rect renderer_dest = rect.move(camera);
+    SDL_Rect renderer_dest = rect.move_inverse(camera);
     SDL_RenderCopy(renderer, texture, &src, &renderer_dest);
 }
