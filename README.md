@@ -1,4 +1,4 @@
-# Grassland
+# SDL Grassland
 
 An attempt at imitating the [RPG Maker](https://www.rpgmakerweb.com/) grid-based game feel using just C++17 and [SDL 2](https://www.libsdl.org/), with tilemaps made with [Tiled](https://www.mapeditor.org/), and tilesets free for commercial and personal use credited below.
 
