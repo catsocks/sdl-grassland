@@ -49,6 +49,10 @@ Both tools require Python 3 and should be run from the project's root folder.
 * [FREE RPG Tileset 32x32 by pipoya](https://pipoya.itch.io/pipoya-rpg-tileset-32x32)
 * [PIPOYA FREE RPG Character Sprites 32x32 by pipoya](https://pipoya.itch.io/pipoya-free-rpg-character-sprites-32x32)
 
+## License
+
+Everything with the exception of the contents of the tilesets and cmake folders are dedicated to the public domain under the CC0 1.0 Universal license.
+
 ## Resources
 
 * [Introduction to the A* Algorithm](https://www.redblobgames.com/pathfinding/a-star/introduction.html) and [Implementation of A&ast;](
