@@ -1,4 +1,4 @@
-# SDL Grassland
+# Grassland
 
 An unfinished attempt at imitating the [RPG Maker](https://www.rpgmakerweb.com/)
 grid-based game look using C++17 and [SDL 2](https://www.libsdl.org/)
