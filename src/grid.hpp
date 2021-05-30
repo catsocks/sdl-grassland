@@ -1,8 +1,7 @@
 // TODO: Location should be part of Grid.
 // TODO: Location operator functions should be part of itself.
 #pragma once
-#include "math.hpp"
-#include "tilemap.hpp"
+
 #include <algorithm>
 #include <array>
 #include <cstdlib>
@@ -10,6 +9,9 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+
+#include "math.hpp"
+#include "tilemap.hpp"
 
 struct Location {
     int x{}, y{};

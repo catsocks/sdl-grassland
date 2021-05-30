@@ -1,9 +1,11 @@
 #pragma once
+
+#include <SDL2/SDL.h>
+
 #include "grid.hpp"
 #include "math.hpp"
 #include "tileset.hpp"
 #include "world.hpp"
-#include <SDL2/SDL.h>
 
 class Sprite {
     static constexpr auto INITIAL_WALK_CYCLE = 1;

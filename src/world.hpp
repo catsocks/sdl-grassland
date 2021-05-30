@@ -1,8 +1,10 @@
 #pragma once
-#include "grid.hpp"
-#include "math.hpp"
+
 #include <SDL2/SDL.h>
 #include <vector>
+
+#include "grid.hpp"
+#include "math.hpp"
 
 // TODO: Can this forward declaration be avoided without a circular dependency?
 class Sprite;

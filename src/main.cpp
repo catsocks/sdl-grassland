@@ -3,14 +3,15 @@
 // TODO: Move companion when the player's movement is blocked by it.
 // TODO: Swap the companion for a monster that attacks the player.
 // TODO: Better integrate Grid with the game state.
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+
 #include "math.hpp"
 #include "player.hpp"
 #include "sprite.hpp"
 #include "tilemap.hpp"
 #include "tileset.hpp"
 #include "world.hpp"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 
 constexpr auto TILE_WIDTH = 32;
 constexpr auto TILE_HEIGHT = 32;

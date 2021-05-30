@@ -1,6 +1,5 @@
 #pragma once
-#include "math.hpp"
-#include "tileset.hpp"
+
 #include <SDL2/SDL.h>
 #include <filesystem>
 #include <fstream>
@@ -9,6 +8,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+
+#include "math.hpp"
+#include "tileset.hpp"
 
 namespace fs = std::filesystem;
 
