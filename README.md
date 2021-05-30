@@ -1,8 +1,14 @@
 # SDL Grassland
 
-An attempt at imitating the [RPG Maker](https://www.rpgmakerweb.com/) grid-based game feel using just C++17 and [SDL 2](https://www.libsdl.org/), with tilemaps made with [Tiled](https://www.mapeditor.org/), and tilesets free for commercial and personal use credited below.
+An unfinished attempt at imitating the [RPG Maker](https://www.rpgmakerweb.com/)
+grid-based game look using C++17 and [SDL 2](https://www.libsdl.org/)
 
-You can walk and avoid obstacles in a 32x32 forest map while a companion follows you, it's not particularly entertaining yet.
+In this demo you can walk in a 32x32 forest world with some obstacles while a
+companion character follows you. It's not particularly entertaining yet.
+
+The tilesets used are freely available and are credited in the
+[Credits](#Credits) section below. The tilemaps were created with
+[Tiled](https://www.mapeditor.org).
 
 ## Screenshot
 
@@ -10,39 +16,77 @@ You can walk and avoid obstacles in a 32x32 forest map while a companion follows
 
 ## Building
 
-Building should be possible in all major platforms and the following are required to compile this program:
+It should be possible to build this project on Windows, macOS and GNU/Linux.
 
-* CMake 3.2 or higher
-* Compiler with C++17 support
-* Libraries SDL >= 2.0 and [SDL_image](https://www.libsdl.org/projects/SDL_image/) >= 2.0
+### Requirements
 
-On GNU/Linux Fedora 31 all necessary libraries may be installed with the command: `dnf install SDL2-devel SDL2_image-devel`.
+#### Programs
 
-Other systems' package managers and tools like [Vcpkg](https://github.com/microsoft/vcpkg) may be used to acquire the necessary libraries.
+* CMake >= 3.2 (guess)
+* C++ compiler with C++17 support
+* Python 3 (optional, needed to run the scripts in the _tools_ folder)
+* Tiled (optional, needed to edit the tilemap and tileset files in the _assets_
+folder)
 
-With requirements met, create a folder `build/`, make it the current directory, run `cmake ..` to generate the build files for your system and configuration, and then `cmake --build .` to build the project. Some additional steps may be necessary, specially on Windows.
+#### Libraries
+
+* SDL >= 2.0 (guess)
+* [SDL_image](https://www.libsdl.org/projects/SDL_image) >= 2.0 (guess)
+
+On GNU/Linux Fedora the libraries may be installed with the following command:
+
+```sh
+$ sudo dnf install SDL2-devel SDL2_image-devel
+````
+
+On Windows you can use a tool like [Vcpkg](https://github.com/microsoft/vcpkg)
+to install the libraries.
+
+### Instructions
+
+With the necessary programs and libraries installed you may configure a build
+in a folder named _build_ using CMake from the project's root folder with the
+following command:
+
+```sh
+$ cmake -S . -B build
+```
+
+With a successfully configured build you may build the project by running the
+following command:
+
+```sh
+$ cmake --build build
+```
+
+With a successful build you may run the game from the project's root folder.
 
 ## Gameplay
 
 * <kbd>Up</kbd> <kbd>Down</kbd> <kbd>Left</kbd> <kbd>Right</kbd> Walk
-* <kbd>Shift</kbd> + <kbd>Up</kbd> <kbd>Down</kbd> <kbd>Left</kbd> <kbd>Right</kbd> Walk in place
+* <kbd>Shift</kbd> + <kbd>Up</kbd> <kbd>Down</kbd> <kbd>Left</kbd>
+<kbd>Right</kbd> Walk in place
 
 ## Assets
 
-Tiled, a lightweight cross-platform program that makes creating tilemaps easy, is used to generate the tilemap CSV files stored in `tilemaps/` and its tilemap (.tmx) and tileset (.tsx) source files are kept in `assets/`.
+The program Tiled is used to generate the tilemap CSV files stored in the
+_tilemaps_ folder, and their tilemap (.tmx) and tileset (.tsx) source files are
+kept in the _assets_ folder.
 
 ## Tools
 
-* Normalize the filename of the CSV tilemaps exported from Tiled to `tilemaps/` by running `tools/rename_tilemaps.py`.
+* Convert the filename of the CSV tilemaps that Tiled exports to the format that
+the game expects in the _tilemaps_ folder by running _tools/rename_tilemaps.py_.
 
-* Copy all files need to distribute the game to a single separate folder `dist/` by running `tools/distribute.py`.
+* Copy the executable from the _build_ folder and the _tilemaps_ and _tilesets_
+folders to a folder named _dist_ by running _tools/distribute.py_.
 
-Both tools require Python 3 and should be run from the project's root folder.
+Both tools should be run from the project's root folder.
 
 ## TODO
 
-* Add a menu with a button that starts the game
-* Use SDL_mixer to add some ambient sounds
+* Add a start screen with a button to start the game
+* Add ambient sounds with a library like SDL_mixer
 
 ## Credits
 
@@ -51,10 +95,11 @@ Both tools require Python 3 and should be run from the project's root folder.
 
 ## License
 
-Everything with the exception of the contents of the tilesets and cmake folders are dedicated to the public domain under the CC0 1.0 Universal license.
+Everything with the exception of the contents of the _tilesets_ and cmake
+folders is dedicated to the public domain under the CC0 1.0 Universal license.
 
 ## Resources
 
-* [Introduction to the A* Algorithm](https://www.redblobgames.com/pathfinding/a-star/introduction.html) and [Implementation of A&ast;](
-https://www.redblobgames.com/pathfinding/a-star/implementation.html)
+* [Introduction to the A* Algorithm](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
+* [Implementation of A](https://www.redblobgames.com/pathfinding/a-star/implementation.html)
 * [APIByCategory - SDL Wiki'](https://wiki.libsdl.org/APIByCategory)
