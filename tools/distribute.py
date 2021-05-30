@@ -14,7 +14,7 @@ if __name__ == "__main__":
         pass
 
     # TODO: Check that this works when building is done with MSVC.
-    shutil.copyfile(os.path.join("build", "grassland"), os.path.join(DEST, "grassland"))
+    shutil.copy(os.path.join("build", "grassland"), os.path.join(DEST, "grassland"))
 
     try:
         shutil.copytree("tilemaps", os.path.join(DEST, "tilemaps"))
