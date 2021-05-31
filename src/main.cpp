@@ -30,40 +30,40 @@ int main() {
     // Initialize SDL with the video subsystem.
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-                     "Couldn't initialize SDL: %s", SDL_GetError());
+            "Couldn't initialize SDL: %s", SDL_GetError());
         return EXIT_FAILURE;
     }
 
     // Initialize SDL_image with PNG support.
     if (IMG_Init(IMG_INIT_PNG) < 0) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-                     "Couldn't initialize SDL_image: %s", IMG_GetError());
+            "Couldn't initialize SDL_image: %s", IMG_GetError());
         return EXIT_FAILURE;
     }
 
     // Create a hidden SDL window.
     SDL_Window *window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED,
-                                          SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH,
-                                          WINDOW_HEIGHT, SDL_WINDOW_HIDDEN);
+        SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT,
+        SDL_WINDOW_HIDDEN);
     if (!window) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-                     "Couldn't create SDL window: %s", SDL_GetError());
+            "Couldn't create SDL window: %s", SDL_GetError());
         return EXIT_FAILURE;
     }
 
     // Create a SDL renderer which has presentation synced to VSync.
-    SDL_Renderer *renderer =
-        SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+    SDL_Renderer *renderer
+        = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
     if (!window) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-                     "Couldn't create SDL renderer: %s", SDL_GetError());
+            "Couldn't create SDL renderer: %s", SDL_GetError());
         return EXIT_FAILURE;
     }
 
     // Adjust the renderer scale.
     if (SDL_RenderSetScale(renderer, SCALE_FACTOR, SCALE_FACTOR) == -1) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
-                     "Couldn't set render scale: %s", SDL_GetError());
+            "Couldn't set render scale: %s", SDL_GetError());
         return EXIT_FAILURE;
     }
 
@@ -75,7 +75,7 @@ int main() {
         tilesets = load_tilesets("tilesets", TILE_WIDTH, TILE_HEIGHT);
     } catch (std::exception &e) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't load tilesets: %s",
-                     e.what());
+            e.what());
         return EXIT_FAILURE;
     }
 
@@ -85,15 +85,15 @@ int main() {
         tilemaps = load_tilemaps("tilemaps");
     } catch (std::exception &e) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't load tilemaps: %s",
-                     e.what());
+            e.what());
         return EXIT_FAILURE;
     }
 
     // Render tilemaps with given tilesets.
-    auto background = render_tilemap(renderer, tilemaps.at("background"),
-                                     tilesets.at("misc"));
-    auto foreground = render_tilemap(renderer, tilemaps.at("foreground"),
-                                     tilesets.at("misc"));
+    auto background = render_tilemap(
+        renderer, tilemaps.at("background"), tilesets.at("misc"));
+    auto foreground = render_tilemap(
+        renderer, tilemaps.at("foreground"), tilesets.at("misc"));
 
     // Show the window after most costly initial operations are done.
     SDL_ShowWindow(window);

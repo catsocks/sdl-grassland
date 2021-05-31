@@ -15,7 +15,7 @@
 namespace fs = std::filesystem;
 
 class Tilemap {
-  public:
+public:
     int width{}, height{};
     std::vector<std::optional<int>> tiles;
 

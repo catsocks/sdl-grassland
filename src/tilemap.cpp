@@ -1,7 +1,9 @@
 #include "tilemap.hpp"
 #include "tileset.hpp"
 
-std::optional<int> Tilemap::at(int x, int y) { return tiles.at(y * width + x); }
+std::optional<int> Tilemap::at(int x, int y) {
+    return tiles.at(y * width + x);
+}
 
 Tilemap load_tilemap(const fs::path &path) {
     Tilemap tilemap;
@@ -12,8 +14,8 @@ Tilemap load_tilemap(const fs::path &path) {
         std::stringstream ss(line);
         for (std::string item; std::getline(ss, item, ',');) {
             int col = std::stoi(item);
-            tilemap.tiles.push_back((col == -1) ? std::nullopt
-                                                : std::optional<int>{col});
+            tilemap.tiles.push_back(
+                (col == -1) ? std::nullopt : std::optional<int>{col});
             rowlen += 1;
         }
 
@@ -34,13 +36,15 @@ std::map<std::string, Tilemap> load_tilemaps(const fs::path &folder) {
             continue;
         }
 
-        tilemaps.insert_or_assign(entry.path().stem(),
-                                  load_tilemap(entry.path()));
+        tilemaps.insert_or_assign(
+            entry.path().stem(), load_tilemap(entry.path()));
     }
     return tilemaps;
 }
 
-TilemapRender::TilemapRender() : surface(nullptr), texture(nullptr) {}
+TilemapRender::TilemapRender()
+    : surface(nullptr)
+    , texture(nullptr) { }
 
 void TilemapRender::draw(SDL_Renderer *renderer, const Rect &camera) {
     SDL_Rect rect = camera;
@@ -52,11 +56,10 @@ TilemapRender render_tilemap(SDL_Renderer *renderer, Tilemap &tm, Tileset &ts) {
 
     // Create surface.
     render.surface = SDL_CreateRGBSurfaceWithFormat(0, tm.width * ts.tile_width,
-                                                    tm.height * ts.tile_height,
-                                                    32, SDL_PIXELFORMAT_RGBA32);
+        tm.height * ts.tile_height, 32, SDL_PIXELFORMAT_RGBA32);
     if (!render.surface) {
-        throw std::runtime_error(std::string("couldn't create surface: ") +
-                                 SDL_GetError());
+        throw std::runtime_error(
+            std::string("couldn't create surface: ") + SDL_GetError());
     }
 
     // Draw tilemap with given tileset.
@@ -65,8 +68,8 @@ TilemapRender render_tilemap(SDL_Renderer *renderer, Tilemap &tm, Tileset &ts) {
             auto tile = tm.at(x, y);
             if (tile.has_value()) {
                 auto src = ts.at(tile.value());
-                SDL_Rect dest{x * src.w, y * src.h, ts.tile_width,
-                              ts.tile_height};
+                SDL_Rect dest{
+                    x * src.w, y * src.h, ts.tile_width, ts.tile_height};
                 SDL_BlitSurface(ts.image, &src, render.surface, &dest);
             }
         }
@@ -74,8 +77,8 @@ TilemapRender render_tilemap(SDL_Renderer *renderer, Tilemap &tm, Tileset &ts) {
 
     render.texture = SDL_CreateTextureFromSurface(renderer, render.surface);
     if (!render.texture) {
-        throw std::runtime_error(std::string("couldn't create texture: ") +
-                                 SDL_GetError());
+        throw std::runtime_error(
+            std::string("couldn't create texture: ") + SDL_GetError());
     }
 
     return render;

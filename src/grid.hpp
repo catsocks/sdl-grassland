@@ -25,11 +25,11 @@ Location make_location(const Rect &r);
 
 // Implement hash function so Location can be put into an unordered_set.
 namespace std {
-    template <> struct hash<Location> {
-        size_t operator()(const Location &id) const noexcept {
-            return hash<int>()(id.x ^ (id.y << 4));
-        }
-    };
+template <> struct hash<Location> {
+    size_t operator()(const Location &id) const noexcept {
+        return hash<int>()(id.x ^ (id.y << 4));
+    }
+};
 }
 
 struct Grid {
@@ -46,9 +46,8 @@ struct Grid {
     Vector2 get_size() const;
 };
 
-std::unordered_map<Location, Location>
-breadth_first_search(const Grid &grid, Location start, Location goal);
+std::unordered_map<Location, Location> breadth_first_search(
+    const Grid &grid, Location start, Location goal);
 
-std::vector<Location>
-reconstruct_path(Location start, Location goal,
-                 std::unordered_map<Location, Location> came_from);
+std::vector<Location> reconstruct_path(Location start, Location goal,
+    std::unordered_map<Location, Location> came_from);

@@ -1,11 +1,15 @@
 #include "grid.hpp"
 
-constexpr std::array<Location, 4> DIRECTIONS = {
-    Location{1, 0}, Location{0, -1}, Location{-1, 0}, Location{0, 1}};
+constexpr std::array<Location, 4> DIRECTIONS
+    = {Location{1, 0}, Location{0, -1}, Location{-1, 0}, Location{0, 1}};
 
-bool operator==(Location a, Location b) { return a.x == b.x && a.y == b.y; }
+bool operator==(Location a, Location b) {
+    return a.x == b.x && a.y == b.y;
+}
 
-bool operator!=(Location a, Location b) { return !(a == b); }
+bool operator!=(Location a, Location b) {
+    return !(a == b);
+}
 
 bool operator<(Location a, Location b) {
     return std::tie(a.x, a.y) < std::tie(b.x, b.y);
@@ -15,7 +19,9 @@ Location make_location(const Rect &r) {
     return {static_cast<int>(r.x) / r.width, static_cast<int>(r.y) / r.height};
 }
 
-Grid::Grid(const Tilemap &base) : width(base.width), height(base.height) {}
+Grid::Grid(const Tilemap &base)
+    : width(base.width)
+    , height(base.height) { }
 
 bool Grid::in_bounds(Location id) const {
     return 0 <= id.x && id.x < width && 0 <= id.y && id.y < height;
@@ -58,8 +64,8 @@ Vector2 Grid::get_size() const {
     return {static_cast<float>(width), static_cast<float>(height)};
 }
 
-std::unordered_map<Location, Location>
-breadth_first_search(const Grid &grid, Location start, Location goal) {
+std::unordered_map<Location, Location> breadth_first_search(
+    const Grid &grid, Location start, Location goal) {
     std::queue<Location> frontier;
     frontier.push(start);
 
@@ -84,9 +90,8 @@ breadth_first_search(const Grid &grid, Location start, Location goal) {
     return came_from;
 }
 
-std::vector<Location>
-reconstruct_path(Location start, Location goal,
-                 std::unordered_map<Location, Location> came_from) {
+std::vector<Location> reconstruct_path(Location start, Location goal,
+    std::unordered_map<Location, Location> came_from) {
     std::vector<Location> path;
     Location current = goal;
     while (current != start) {

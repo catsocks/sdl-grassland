@@ -12,7 +12,7 @@ namespace fs = std::filesystem;
 class Tileset {
     int cols{};
 
-  public:
+public:
     int tile_width{}, tile_height{};
     SDL_Surface *image{};
 
@@ -24,5 +24,5 @@ class Tileset {
 };
 
 Tileset load_tileset(const fs::path &path, int tile_width, int tile_height);
-std::map<std::string, Tileset> load_tilesets(const fs::path &folder,
-                                             int tile_width, int tile_height);
+std::map<std::string, Tileset> load_tilesets(
+    const fs::path &folder, int tile_width, int tile_height);

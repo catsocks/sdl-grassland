@@ -1,13 +1,14 @@
 #include "sprite.hpp"
 
 Sprite::Sprite(const Vector2 &pos, const Vector2 &size)
-    : rect(pos, size), dest(rect) {}
+    : rect(pos, size)
+    , dest(rect) { }
 
 void Sprite::set_texture(SDL_Renderer *renderer, Tileset &ts) {
     texture = SDL_CreateTextureFromSurface(renderer, ts.image);
     if (!texture) {
-        throw std::runtime_error(std::string("Couldn't create texture: ") +
-                                 SDL_GetError());
+        throw std::runtime_error(
+            std::string("Couldn't create texture: ") + SDL_GetError());
     }
 }
 
@@ -56,10 +57,18 @@ void Sprite::move(World &world, Direction dir, bool ignore_obstacles) {
 
     auto new_dest = rect;
     switch (dir) {
-    case Direction::down: new_dest.y += new_dest.height; break;
-    case Direction::left: new_dest.x -= new_dest.width; break;
-    case Direction::right: new_dest.x += new_dest.width; break;
-    case Direction::up: new_dest.y -= new_dest.height; break;
+    case Direction::down:
+        new_dest.y += new_dest.height;
+        break;
+    case Direction::left:
+        new_dest.x -= new_dest.width;
+        break;
+    case Direction::right:
+        new_dest.x += new_dest.width;
+        break;
+    case Direction::up:
+        new_dest.y -= new_dest.height;
+        break;
     }
 
     if (!world.rect.fits_within(new_dest)) {
@@ -71,8 +80,8 @@ void Sprite::move(World &world, Direction dir, bool ignore_obstacles) {
     // TODO: Remove weak assumption that kind member will be unique among
     // sprites.
     for (auto &s : world.sprites) {
-        if (s->kind != kind && s->dest.x == new_dest.x &&
-            s->dest.y == new_dest.y) {
+        if (s->kind != kind && s->dest.x == new_dest.x
+            && s->dest.y == new_dest.y) {
             look(dir, true);
             return;
         }
@@ -134,8 +143,7 @@ void Sprite::update(float dt) {
 
 void Sprite::draw(SDL_Renderer *renderer, const Rect &camera) {
     SDL_Rect src{walk_cycle * rect.width,
-                 rect.height * static_cast<int>(direction), rect.width,
-                 rect.height};
+        rect.height * static_cast<int>(direction), rect.width, rect.height};
 
     SDL_Rect renderer_dest = rect.move_inverse(camera);
     SDL_RenderCopy(renderer, texture, &src, &renderer_dest);

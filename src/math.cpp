@@ -2,7 +2,9 @@
 
 // float lerp(float a, float b, float t) { return (a * (1.0 - t)) + (b * t); }
 
-template <typename T> int sign(T val) { return (T(0) < val) - (val < T(0)); }
+template <typename T> int sign(T val) {
+    return (T(0) < val) - (val < T(0));
+}
 
 float move_towards(float a, float b, float max_delta) {
     if (abs(b - a) <= max_delta) {
@@ -16,10 +18,16 @@ Vector2 Vector2::operator*(const Vector2 &v) const {
 }
 
 Rect::Rect(float x, float y, int width, int height)
-    : x(x), y(y), width(width), height(height) {}
+    : x(x)
+    , y(y)
+    , width(width)
+    , height(height) { }
 
 Rect::Rect(const Vector2 &pos, const Vector2 &size)
-    : x(pos.x), y(pos.y), width(size.x), height(size.y) {}
+    : x(pos.x)
+    , y(pos.y)
+    , width(size.x)
+    , height(size.y) { }
 
 Rect Rect::move_inverse(const Rect &r) const {
     return {x - r.x, y - r.y, width, height};
@@ -74,9 +82,9 @@ Rect Rect::move_towards(const Rect &r, float max_dist_delta) const {
 }
 
 bool Rect::fits_within(const Rect &r) const {
-    return (x <= r.x) && (y <= r.y) && (x + width >= r.x + r.width) &&
-           (y + height >= r.y + r.height) && (x + width > r.x) &&
-           (y + height > r.y);
+    return (x <= r.x) && (y <= r.y) && (x + width >= r.x + r.width)
+        && (y + height >= r.y + r.height) && (x + width > r.x)
+        && (y + height > r.y);
 }
 
 Vector2 Rect::distance(const Rect &r) const {
@@ -87,7 +95,9 @@ bool Rect::operator==(const Rect &r) const {
     return (x == r.x && y == r.y && width == r.width && height == r.height);
 }
 
-bool Rect::operator!=(const Rect &r) const { return !(*this == r); }
+bool Rect::operator!=(const Rect &r) const {
+    return !(*this == r);
+}
 
 Rect::operator SDL_Rect() const {
     return {static_cast<int>(x), static_cast<int>(y), width, height};

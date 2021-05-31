@@ -10,9 +10,9 @@
 class Sprite {
     static constexpr auto INITIAL_WALK_CYCLE = 1;
     static constexpr auto WALK_CYCLES = 3; // assumption about tilesets
-    static constexpr auto SIGHT = 6;       // range of sight in tiles
+    static constexpr auto SIGHT = 6; // range of sight in tiles
 
-  public:
+public:
     enum class Kind { npc, girl };
 
     // Direction order is important for drawing sprites.
