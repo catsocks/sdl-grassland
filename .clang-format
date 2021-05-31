@@ -1,8 +1,10 @@
 ﻿---
-BasedOnStyle: LLVM
-IndentWidth: '4'
-NamespaceIndentation: All
-FixNamespaceComments: false
-AllowShortCaseLabelsOnASingleLine: true
+BasedOnStyle: WebKit
+AllowShortFunctionsOnASingleLine: Empty
+BreakBeforeBraces: Attach
+ColumnLimit: '80'
+Cpp11BracedListStyle: 'true'
+PointerAlignment: Right
+SpaceBeforeCpp11BracedList: 'false'
 
 ...
