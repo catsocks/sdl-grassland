@@ -9,6 +9,8 @@ else()
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+find_program(NODE node)
+
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
@@ -34,3 +36,24 @@ target_link_libraries(grassland ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
 target_include_directories(grassland PRIVATE ${SDL2_INCLUDE_DIR}
     ${SDL2_IMAGE_INCLUDE_DIR})
 
+add_custom_command(
+  OUTPUT tilemaps
+  COMMAND ${NODE} ${PROJECT_SOURCE_DIR}/tools/export-tilemaps.js
+    --output-folder ${PROJECT_BINARY_DIR}
+  DEPENDS ${PROJECT_SOURCE_DIR}/assets/Tiled
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+  COMMENT "Exporting Tiled maps to CSV files"
+  VERBATIM)
+
+add_custom_command(
+  OUTPUT tilesets
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets/tilesets
+    ${PROJECT_BINARY_DIR}/tilesets
+  DEPENDS ${CMAKE_SOURCE_DIR}/assets/tilesets
+  COMMENT "Copying tilesets"
+  VERBATIM)
+
+add_custom_target(grassland_assets
+  DEPENDS ${PROJECT_BINARY_DIR}/tilemaps ${PROJECT_BINARY_DIR}/tilesets)
+
+add_dependencies(grassland grassland_assets)

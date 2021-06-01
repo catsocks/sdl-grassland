@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "dependencies": {
+    "yargs": "^17.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}

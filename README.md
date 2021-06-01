@@ -14,7 +14,13 @@ The tilesets used are freely available and are credited in the
 
 ![Screenshot](screenshot.png)
 
-## Building
+## Gameplay
+
+* <kbd>Up</kbd> <kbd>Down</kbd> <kbd>Left</kbd> <kbd>Right</kbd> Walk
+* <kbd>Shift</kbd> + <kbd>Up</kbd> <kbd>Down</kbd> <kbd>Left</kbd>
+<kbd>Right</kbd> Walk in place
+
+## Build
 
 It should be possible to build this project on Windows, macOS and GNU/Linux.
 
@@ -22,66 +28,51 @@ It should be possible to build this project on Windows, macOS and GNU/Linux.
 
 #### Programs
 
-* CMake >= 3.2 (guess)
 * C++ compiler with C++17 support
-* Python 3 (optional, needed to run the scripts in the _tools_ folder)
-* Tiled (optional, needed to edit the tilemap and tileset files in the _assets_
-folder)
+* CMake (tested with v3.19)
+* Node.js (needed for running the scripts in the tools folder, tested with
+v14.17)
+* Tiled (needed for exporting the Tiled maps to CSV files, tested with v1.3)
 
 #### Libraries
 
-* SDL >= 2.0 (guess)
-* [SDL_image](https://www.libsdl.org/projects/SDL_image) >= 2.0 (guess)
+* SDL (tested with v2.0.14)
+* [SDL_image](https://www.libsdl.org/projects/SDL_image) (tested with v2.0.5)
 
-On GNU/Linux Fedora the libraries may be installed with the following command:
+On GNU/Linux Fedora, the libraries can be installed with the following command:
 
 ```sh
 $ sudo dnf install SDL2-devel SDL2_image-devel
 ````
 
-On Windows you can use a tool like [Vcpkg](https://github.com/microsoft/vcpkg)
-to install the libraries.
+And on Windows, you can use a tool like
+[Vcpkg](https://github.com/microsoft/vcpkg) to install the libraries.
 
 ### Instructions
 
-With the necessary programs and libraries installed you may configure a build
-in a folder named _build_ using CMake from the project's root folder with the
-following command:
+With the necessary programs and libraries installed, configure a build in the
+folder named _build_ using the following CMake command from the root
+folder of the project:
 
 ```sh
 $ cmake -S . -B build
 ```
 
-With a successfully configured build you may build the project by running the
-following command:
+Then build the project by running the following command:
 
 ```sh
 $ cmake --build build
 ```
 
-With a successful build you may run the game from the project's root folder.
+The command above will compile the game, call the tools/export-tilemaps.js
+script to export the Tiled maps in the assets/Tiled folder to CSV files in the
+build folder, and copy the tilesets.
 
-## Gameplay
+The game can now be run from inside the build folder like so with Bash:
 
-* <kbd>Up</kbd> <kbd>Down</kbd> <kbd>Left</kbd> <kbd>Right</kbd> Walk
-* <kbd>Shift</kbd> + <kbd>Up</kbd> <kbd>Down</kbd> <kbd>Left</kbd>
-<kbd>Right</kbd> Walk in place
-
-## Assets
-
-The program Tiled is used to generate the tilemap CSV files stored in the
-_tilemaps_ folder, and their tilemap (.tmx) and tileset (.tsx) source files are
-kept in the _assets_ folder.
-
-## Tools
-
-* Convert the filename of the CSV tilemaps that Tiled exports to the format that
-the game expects in the _tilemaps_ folder by running _tools/rename_tilemaps.py_.
-
-* Copy the executable from the _build_ folder and the _tilemaps_ and _tilesets_
-folders to a folder named _dist_ by running _tools/distribute.py_.
-
-Both tools should be run from the project's root folder.
+```sh
+$ (cd build && ./grassland)
+```
 
 ## TODO
 

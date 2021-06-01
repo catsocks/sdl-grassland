@@ -91,19 +91,19 @@ int main() {
 
     // Render tilemaps with given tilesets.
     auto background = render_tilemap(
-        renderer, tilemaps.at("background"), tilesets.at("misc"));
+        renderer, tilemaps.at("World_Background"), tilesets.at("misc"));
     auto foreground = render_tilemap(
-        renderer, tilemaps.at("foreground"), tilesets.at("misc"));
+        renderer, tilemaps.at("World_Foreground"), tilesets.at("misc"));
 
-    // Show the window after most costly initial operations are done.
+    // Show the window after most costly iitial operations are done.
     SDL_ShowWindow(window);
 
     uint32_t ticks = 0; // for calculating delta time
 
     // Begin defining the game state.
 
-    Grid grid(tilemaps.at("background"));
-    grid.set_obstacles(tilemaps.at("obstacles"));
+    Grid grid(tilemaps.at("World_Background"));
+    grid.set_obstacles(tilemaps.at("World_Obstacles"));
 
     // Create sprites.
     Vector2 tile_size{TILE_WIDTH, TILE_HEIGHT};
