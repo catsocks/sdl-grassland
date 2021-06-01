@@ -39,20 +39,29 @@ v14.17)
 * SDL (tested with v2.0.14)
 * [SDL_image](https://www.libsdl.org/projects/SDL_image) (tested with v2.0.5)
 
-On GNU/Linux Fedora, the libraries can be installed with the following command:
+### Preparing to Build
+
+Ensure the the necessary programs and libraries listed above are installed, then
+install the Node.js scripts dependencies using npm like so:
+
+```sh
+$ npm install
+```
+
+On GNU/Linux Fedora, the libraries listed above can be installed using the _dnf_
+package manager with the following command:
 
 ```sh
 $ sudo dnf install SDL2-devel SDL2_image-devel
 ````
 
-And on Windows, you can use a tool like
-[Vcpkg](https://github.com/microsoft/vcpkg) to install the libraries.
+On Windows, you can use a tool like [Vcpkg](https://github.com/microsoft/vcpkg)
+to install them.
 
-### Instructions
+### Building
 
-With the necessary programs and libraries installed, configure a build in the
-folder named _build_ using the following CMake command from the root
-folder of the project:
+Configure a build in the folder named _build_ using the following CMake command
+from the root folder of the project:
 
 ```sh
 $ cmake -S . -B build
