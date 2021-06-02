@@ -3,7 +3,7 @@
 // TODO: Move companion when the player's movement is blocked by it.
 // TODO: Swap the companion for a monster that attacks the player.
 // TODO: Better integrate Grid with the game state.
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <SDL2/SDL_image.h>
 
 #include "math.hpp"
