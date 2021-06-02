@@ -15,7 +15,7 @@ bool operator<(Location a, Location b) {
     return std::tie(a.x, a.y) < std::tie(b.x, b.y);
 }
 
-Location make_location(const Rect &r) {
+Location make_location(const Rect2D &r) {
     return {static_cast<int>(r.x) / r.width, static_cast<int>(r.y) / r.height};
 }
 
@@ -60,7 +60,7 @@ void Grid::set_obstacles(Tilemap &tilemap) {
     }
 }
 
-Vector2 Grid::get_size() const {
+Vec2D Grid::get_size() const {
     return {static_cast<float>(width), static_cast<float>(height)};
 }
 

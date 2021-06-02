@@ -1,6 +1,6 @@
 #include "sprite.hpp"
 
-Sprite::Sprite(const Vector2 &pos, const Vector2 &size)
+Sprite::Sprite(const Vec2D &pos, const Vec2D &size)
     : rect(pos, size)
     , dest(rect) { }
 
@@ -19,7 +19,7 @@ void Sprite::look(Direction dir, bool reset_walk_cycle) {
     }
 }
 
-bool Sprite::sees(const Vector2 &distance) {
+bool Sprite::sees(const Vec2D &distance) {
     if (distance.x > rect.width * SIGHT) {
         return false;
     }
@@ -141,7 +141,7 @@ void Sprite::update(float dt) {
     rect = rect.move_towards(dest, dt * 150);
 }
 
-void Sprite::draw(SDL_Renderer *renderer, const Rect &camera) {
+void Sprite::draw(SDL_Renderer *renderer, const Rect2D &camera) {
     SDL_Rect src{walk_cycle * rect.width,
         rect.height * static_cast<int>(direction), rect.width, rect.height};
 

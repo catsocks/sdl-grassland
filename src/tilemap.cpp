@@ -46,7 +46,7 @@ TilemapRender::TilemapRender()
     : surface(nullptr)
     , texture(nullptr) { }
 
-void TilemapRender::draw(SDL_Renderer *renderer, const Rect &camera) {
+void TilemapRender::draw(SDL_Renderer *renderer, const Rect2D &camera) {
     SDL_Rect rect = camera;
     SDL_RenderCopy(renderer, texture, &rect, nullptr);
 }

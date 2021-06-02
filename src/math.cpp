@@ -13,27 +13,27 @@ float move_towards(float a, float b, float max_delta) {
     return a + sign(b - a) * max_delta;
 }
 
-Vector2 Vector2::operator*(const Vector2 &v) const {
+Vec2D Vec2D::operator*(const Vec2D &v) const {
     return {x * v.x, y * v.y};
 }
 
-Rect::Rect(float x, float y, int width, int height)
+Rect2D::Rect2D(float x, float y, int width, int height)
     : x(x)
     , y(y)
     , width(width)
     , height(height) { }
 
-Rect::Rect(const Vector2 &pos, const Vector2 &size)
+Rect2D::Rect2D(const Vec2D &pos, const Vec2D &size)
     : x(pos.x)
     , y(pos.y)
     , width(size.x)
     , height(size.y) { }
 
-Rect Rect::move_inverse(const Rect &r) const {
+Rect2D Rect2D::move_inverse(const Rect2D &r) const {
     return {x - r.x, y - r.y, width, height};
 }
 
-Rect Rect::center(const Rect &r) const {
+Rect2D Rect2D::center(const Rect2D &r) const {
     return {
         r.x - (width - r.width) / 2,
         r.y - (height - r.height) / 2,
@@ -42,7 +42,7 @@ Rect Rect::center(const Rect &r) const {
     };
 }
 
-Rect Rect::clamp(const Rect &r) const {
+Rect2D Rect2D::clamp(const Rect2D &r) const {
     float new_x = x, new_y = y;
     if (width >= r.width) {
         new_x = r.x + r.width / 2 - width / 2;
@@ -72,7 +72,7 @@ Rect Rect::clamp(const Rect &r) const {
 //     };
 // }
 
-Rect Rect::move_towards(const Rect &r, float max_dist_delta) const {
+Rect2D Rect2D::move_towards(const Rect2D &r, float max_dist_delta) const {
     return {
         ::move_towards(x, r.x, max_dist_delta),
         ::move_towards(y, r.y, max_dist_delta),
@@ -81,24 +81,24 @@ Rect Rect::move_towards(const Rect &r, float max_dist_delta) const {
     };
 }
 
-bool Rect::fits_within(const Rect &r) const {
+bool Rect2D::fits_within(const Rect2D &r) const {
     return (x <= r.x) && (y <= r.y) && (x + width >= r.x + r.width)
         && (y + height >= r.y + r.height) && (x + width > r.x)
         && (y + height > r.y);
 }
 
-Vector2 Rect::distance(const Rect &r) const {
+Vec2D Rect2D::distance(const Rect2D &r) const {
     return {abs(x - r.x), abs(y - r.y)};
 }
 
-bool Rect::operator==(const Rect &r) const {
+bool Rect2D::operator==(const Rect2D &r) const {
     return (x == r.x && y == r.y && width == r.width && height == r.height);
 }
 
-bool Rect::operator!=(const Rect &r) const {
+bool Rect2D::operator!=(const Rect2D &r) const {
     return !(*this == r);
 }
 
-Rect::operator SDL_Rect() const {
+Rect2D::operator SDL_Rect() const {
     return {static_cast<int>(x), static_cast<int>(y), width, height};
 }

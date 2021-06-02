@@ -10,9 +10,9 @@
 class Sprite;
 
 struct World {
-    Rect rect;
+    Rect2D rect;
     Grid *grid{};
     std::vector<Sprite *> sprites;
 
-    World(const Vector2 &size);
+    World(const Vec2D &size);
 };

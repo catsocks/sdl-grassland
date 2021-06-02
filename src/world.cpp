@@ -1,4 +1,4 @@
 #include "world.hpp"
 
-World::World(const Vector2 &size)
+World::World(const Vec2D &size)
     : rect({}, size) { }

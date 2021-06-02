@@ -31,7 +31,7 @@ struct TilemapRender {
 
     TilemapRender();
 
-    void draw(SDL_Renderer *renderer, const Rect &camera);
+    void draw(SDL_Renderer *renderer, const Rect2D &camera);
 };
 
 TilemapRender render_tilemap(SDL_Renderer *renderer, Tilemap &tm, Tileset &ts);

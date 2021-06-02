@@ -21,7 +21,7 @@ bool operator==(Location a, Location b);
 bool operator!=(Location a, Location b);
 bool operator<(Location a, Location b);
 
-Location make_location(const Rect &r);
+Location make_location(const Rect2D &r);
 
 // Implement hash function so Location can be put into an unordered_set.
 namespace std {
@@ -43,7 +43,7 @@ struct Grid {
     std::vector<Location> neighbors(Location id) const;
 
     void set_obstacles(Tilemap &tilemap);
-    Vector2 get_size() const;
+    Vec2D get_size() const;
 };
 
 std::unordered_map<Location, Location> breadth_first_search(

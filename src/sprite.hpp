@@ -18,19 +18,19 @@ public:
     // Direction order is important for drawing sprites.
     enum class Direction { down, left, right, up };
 
-    Rect rect;
-    Rect dest;
+    Rect2D rect;
+    Rect2D dest;
     Kind kind{};
     Direction direction{};
     int walk_cycle = INITIAL_WALK_CYCLE;
 
     SDL_Texture *texture{};
 
-    Sprite(const Vector2 &pos, const Vector2 &size);
+    Sprite(const Vec2D &pos, const Vec2D &size);
 
     void set_texture(SDL_Renderer *renderer, Tileset &ts);
 
-    bool sees(const Vector2 &distance);
+    bool sees(const Vec2D &distance);
     void look(Direction dir, bool reset_walk_cycle = false);
     void look(const Sprite &target, bool reset_walk_cycle = false);
     void move(World &world, Direction dir, bool ignore_obstacles = false);
@@ -38,5 +38,5 @@ public:
 
     void update(float dt);
 
-    void draw(SDL_Renderer *renderer, const Rect &camera);
+    void draw(SDL_Renderer *renderer, const Rect2D &camera);
 };

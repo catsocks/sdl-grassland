@@ -3,29 +3,29 @@
 #include <SDL.h>
 #include <algorithm>
 
-struct Vector2 {
+struct Vec2D {
     float x{}, y{};
 
-    Vector2 operator*(const Vector2 &v) const;
+    Vec2D operator*(const Vec2D &v) const;
 };
 
-struct Rect {
+struct Rect2D {
     float x{}, y{};
     int width{}, height{};
 
-    Rect(float x, float y, int width, int height);
-    Rect(const Vector2 &pos, const Vector2 &size);
+    Rect2D(float x, float y, int width, int height);
+    Rect2D(const Vec2D &pos, const Vec2D &size);
 
-    Rect move_inverse(const Rect &r) const;
-    Rect center(const Rect &r) const;
-    Rect clamp(const Rect &r) const;
-    Rect move_towards(const Rect &r, float max_dist_delta) const;
-    bool fits_within(const Rect &r) const;
+    Rect2D move_inverse(const Rect2D &r) const;
+    Rect2D center(const Rect2D &r) const;
+    Rect2D clamp(const Rect2D &r) const;
+    Rect2D move_towards(const Rect2D &r, float max_dist_delta) const;
+    bool fits_within(const Rect2D &r) const;
     // Rect lerp(const Rect &r, float time) const;
-    Vector2 distance(const Rect &r) const;
+    Vec2D distance(const Rect2D &r) const;
 
-    bool operator==(const Rect &r) const;
-    bool operator!=(const Rect &r) const;
+    bool operator==(const Rect2D &r) const;
+    bool operator!=(const Rect2D &r) const;
 
     operator SDL_Rect() const;
 };

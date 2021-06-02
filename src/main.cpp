@@ -106,10 +106,10 @@ int main() {
     grid.set_obstacles(tilemaps.at("World_Obstacles"));
 
     // Create sprites.
-    Vector2 tile_size{TILE_WIDTH, TILE_HEIGHT};
+    Vec2D tile_size{TILE_WIDTH, TILE_HEIGHT};
 
-    Sprite girl(Vector2{16, 16} * tile_size, tile_size);
-    Sprite npc(Vector2{17, 2} * tile_size, tile_size);
+    Sprite girl(Vec2D{16, 16} * tile_size, tile_size);
+    Sprite npc(Vec2D{17, 2} * tile_size, tile_size);
 
     girl.kind = Sprite::Kind::girl;
 
@@ -121,7 +121,7 @@ int main() {
     world.sprites.insert(world.sprites.end(), {&girl, &npc});
 
     // The camera will target the girl sprite.
-    Rect camera(0, 0, RENDERER_WIDTH, RENDERER_HEIGHT);
+    Rect2D camera(0, 0, RENDERER_WIDTH, RENDERER_HEIGHT);
 
     while (true) {
         // Calculate delta time in seconds.
