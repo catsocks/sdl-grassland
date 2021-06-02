@@ -17,7 +17,7 @@ Vec2D Vec2D::operator*(const Vec2D &v) const {
     return {x * v.x, y * v.y};
 }
 
-Rect2D::Rect2D(float x, float y, int width, int height)
+Rect2D::Rect2D(float x, float y, float width, float height)
     : x(x)
     , y(y)
     , width(width)
@@ -100,5 +100,5 @@ bool Rect2D::operator!=(const Rect2D &r) const {
 }
 
 Rect2D::operator SDL_Rect() const {
-    return {static_cast<int>(x), static_cast<int>(y), width, height};
+    return {static_cast<int>(x), static_cast<int>(y), static_cast<int>(width), static_cast<int>(height)};
 }

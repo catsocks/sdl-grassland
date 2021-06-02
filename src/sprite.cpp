@@ -142,8 +142,9 @@ void Sprite::update(float dt) {
 }
 
 void Sprite::draw(SDL_Renderer *renderer, const Rect2D &camera) {
-    SDL_Rect src{walk_cycle * rect.width,
-        rect.height * static_cast<int>(direction), rect.width, rect.height};
+    SDL_Rect src = rect;
+    src.x = walk_cycle * rect.width;
+    src.y = src.h * static_cast<int>(direction);
 
     SDL_Rect renderer_dest = rect.move_inverse(camera);
     SDL_RenderCopy(renderer, texture, &src, &renderer_dest);

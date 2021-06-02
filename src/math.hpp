@@ -10,10 +10,12 @@ struct Vec2D {
 };
 
 struct Rect2D {
-    float x{}, y{};
-    int width{}, height{};
+    float x{};
+    float y{};
+    float width{};
+    float height{};
 
-    Rect2D(float x, float y, int width, int height);
+    Rect2D(float x, float y, float width, float height);
     Rect2D(const Vec2D &pos, const Vec2D &size);
 
     Rect2D move_inverse(const Rect2D &r) const;

@@ -16,7 +16,7 @@ bool operator<(Location a, Location b) {
 }
 
 Location make_location(const Rect2D &r) {
-    return {static_cast<int>(r.x) / r.width, static_cast<int>(r.y) / r.height};
+    return {static_cast<int>(r.x / r.width), static_cast<int>(r.y / r.height)};
 }
 
 Grid::Grid(const Tilemap &base)
