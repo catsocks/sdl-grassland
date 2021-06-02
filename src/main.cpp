@@ -54,7 +54,7 @@ int main() {
     // Create a SDL renderer which has presentation synced to VSync.
     SDL_Renderer *renderer
         = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
-    if (!window) {
+    if (!renderer) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
             "Couldn't create SDL renderer: %s", SDL_GetError());
         return EXIT_FAILURE;
