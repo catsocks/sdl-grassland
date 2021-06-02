@@ -4,7 +4,8 @@
 #include <algorithm>
 
 struct Vec2D {
-    float x{}, y{};
+    float x{};
+    float y{};
 
     Vec2D operator*(const Vec2D &v) const;
 };
