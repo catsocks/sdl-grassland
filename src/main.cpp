@@ -180,5 +180,6 @@ int main() {
     // Quit SDL.
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    IMG_Quit();
     SDL_Quit();
 }
