@@ -26,10 +26,8 @@ Tilemap load_tilemap(const fs::path &filepath);
 std::map<std::string, Tilemap> load_tilemaps(const fs::path &folder);
 
 struct TilemapRender {
-    SDL_Surface *surface;
-    SDL_Texture *texture;
-
-    TilemapRender();
+    SDL_Surface *surface{};
+    SDL_Texture *texture{};
 
     void draw(SDL_Renderer *renderer, const Rect2D &camera);
 };
