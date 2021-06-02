@@ -15,14 +15,16 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
 add_executable(grassland
-    src/grid.cpp
-    src/main.cpp
-    src/math.cpp
-    src/player.cpp
-    src/sprite.cpp
-    src/tilemap.cpp
-    src/tileset.cpp
-    src/world.cpp
+  src/entity.cpp
+  src/game.cpp
+  src/input.cpp
+  src/main.cpp
+  src/math.cpp
+  src/grid.cpp
+  src/sprite.cpp
+  src/tilemap.cpp
+  src/tileset.cpp
+  src/world.cpp
 )
 
 set_target_properties(grassland

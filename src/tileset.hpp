@@ -7,22 +7,25 @@
 #include <string>
 #include <vector>
 
-namespace fs = std::filesystem;
+#include "math.hpp"
+#include "util.hpp"
 
 class Tileset {
-    int cols{};
+    int columns{};
 
 public:
-    int tile_width{}, tile_height{};
-    SDL_Surface *image{};
+    std::shared_ptr<SDL_Surface> surface;
+    std::shared_ptr<SDL_Texture> texture;
+    Vec2Di tile_size;
 
-    Tileset(int tile_width, int tile_height);
+    Tileset(SDL_Renderer *renderer, SDL_Surface *surface, Vec2Di tile_size);
 
-    void set_image(SDL_Surface *surface);
-
-    SDL_Rect at(int index);
+    Rect2Di at(int idx) const;
 };
 
-Tileset load_tileset(const fs::path &path, int tile_width, int tile_height);
-std::map<std::string, Tileset> load_tilesets(
-    const fs::path &folder, int tile_width, int tile_height);
+using Tilesets = std::unordered_map<std::string, Tileset>;
+
+Tileset load_tileset(SDL_Renderer *renderer, const std::filesystem::path &path,
+    Vec2Di tile_size);
+Tilesets load_tilesets(SDL_Renderer *renderer,
+    const std::filesystem::path &folder, Vec2Di tile_size);

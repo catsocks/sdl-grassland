@@ -1,44 +1,48 @@
 #include "tileset.hpp"
 
-Tileset::Tileset(int tile_width, int tile_height)
-    : tile_width(tile_width)
-    , tile_height(tile_height) { }
+Tileset::Tileset(SDL_Renderer *renderer, SDL_Surface *surface, Vec2Di tile_size)
+    : tile_size(tile_size) {
+    columns = surface->w / tile_size.x;
 
-void Tileset::set_image(SDL_Surface *surface) {
-    image = surface;
-    cols = surface->w / tile_width;
+    auto *texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (texture == nullptr) {
+        throw std::runtime_error(
+            std::string("Couldn't create texture: ") + SDL_GetError());
+    }
+
+    this->surface = std::shared_ptr<SDL_Surface>(surface, SDL_SurfaceDeleter());
+    this->texture = std::shared_ptr<SDL_Texture>(texture, SDL_TextureDeleter());
 }
 
-SDL_Rect Tileset::at(int index) {
+Rect2Di Tileset::at(int idx) const {
     return {
-        index % cols * tile_width,
-        index / cols * tile_height,
-        tile_width,
-        tile_height,
+        (idx % columns) * tile_size.x,
+        (idx / columns) * tile_size.y,
+        tile_size.x,
+        tile_size.y,
     };
 }
 
-Tileset load_tileset(const fs::path &path, int tile_width, int tile_height) {
-    Tileset tileset(tile_width, tile_height);
-    auto surface = IMG_Load(path.c_str());
-    if (!surface) {
+Tileset load_tileset(SDL_Renderer *renderer, const std::filesystem::path &path,
+    Vec2Di tile_size) {
+    auto *surface = IMG_Load(path.c_str());
+    if (surface == nullptr) {
         throw std::runtime_error(
-            std::string("Couldn't load tileset image: ") + IMG_GetError());
+            std::string("Couldn't load tileset: ") + IMG_GetError());
     }
-    tileset.set_image(surface);
-    return tileset;
+    return Tileset(renderer, surface, tile_size);
 }
 
-std::map<std::string, Tileset> load_tilesets(
-    const fs::path &folder, int tile_width, int tile_height) {
-    std::map<std::string, Tileset> tilesets;
-    for (auto &entry : fs::directory_iterator(folder)) {
+Tilesets load_tilesets(SDL_Renderer *renderer,
+    const std::filesystem::path &folder, Vec2Di tile_size) {
+    Tilesets tilesets;
+    for (auto &entry : std::filesystem::directory_iterator(folder)) {
         if (entry.is_directory()) {
             continue;
         }
 
-        tilesets.insert_or_assign(entry.path().stem(),
-            load_tileset(entry.path(), tile_width, tile_height));
+        auto &path = entry.path();
+        tilesets.insert({path.stem(), load_tileset(renderer, path, tile_size)});
     }
     return tilesets;
 }

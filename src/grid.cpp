@@ -1,75 +1,60 @@
 #include "grid.hpp"
 
-constexpr std::array<Location, 4> DIRECTIONS
-    = {Location{1, 0}, Location{0, -1}, Location{-1, 0}, Location{0, 1}};
-
-bool operator==(Location a, Location b) {
-    return a.x == b.x && a.y == b.y;
+Grid::Grid(const Vec2Di &size, const Vec2Di &tile_size)
+    : size(size)
+    , tile_size(tile_size) {
+    directions = std::array{Vec2Di{tile_size.x, 0}, Vec2Di{-tile_size.x, 0},
+        Vec2Di{0, -tile_size.y}, Vec2Di{0, tile_size.y}};
 }
 
-bool operator!=(Location a, Location b) {
-    return !(a == b);
+std::vector<Vec2Di> Grid::find_path(
+    const Vec2Di &start, const Vec2Di &goal) const {
+    auto came_from = breadth_first_search(start, goal);
+
+    std::vector<Vec2Di> path;
+    Vec2Di current = goal;
+    while (current != start && came_from.find(current) != came_from.end()) {
+        path.push_back(current);
+        current = came_from[current];
+    }
+
+    return path;
 }
 
-bool operator<(Location a, Location b) {
-    return std::tie(a.x, a.y) < std::tie(b.x, b.y);
+bool Grid::passable(const Vec2Di &position) const {
+    return static_obstacles.find(position) == static_obstacles.end()
+        && movable_obstacles.find(position) == movable_obstacles.end();
 }
 
-Location make_location(const Rect2D &r) {
-    return {static_cast<int>(r.x / r.width), static_cast<int>(r.y / r.height)};
+bool Grid::in_bounds(const Vec2Di &position) const noexcept {
+    return 0 <= position.x && position.x < size.x && 0 <= position.y
+        && position.y < size.y;
 }
 
-Grid::Grid(const Tilemap &base)
-    : width(base.width)
-    , height(base.height) { }
+std::vector<Vec2Di> Grid::passable_neighbors(const Vec2Di &position) const {
+    std::vector<Vec2Di> neighbors;
 
-bool Grid::in_bounds(Location id) const {
-    return 0 <= id.x && id.x < width && 0 <= id.y && id.y < height;
-}
-
-bool Grid::passable(Location id) const {
-    return obstacles.find(id) == obstacles.end();
-}
-
-std::vector<Location> Grid::neighbors(Location id) const {
-    std::vector<Location> results;
-
-    for (auto dir : DIRECTIONS) {
-        Location next{id.x + dir.x, id.y + dir.y};
+    for (auto d : directions) {
+        Vec2Di next{position.x + d.x, position.y + d.y};
         if (in_bounds(next) && passable(next)) {
-            results.push_back(next);
+            neighbors.push_back(next);
         }
     }
 
-    if ((id.x + id.y) % 2 == 0) {
-        // aesthetic improvement on square grids
-        std::reverse(results.begin(), results.end());
+    // For straighter paths.
+    if ((position.x + position.y) % 2 == 0) {
+        std::reverse(neighbors.begin(), neighbors.end());
     }
 
-    return results;
+    return neighbors;
 }
 
-void Grid::set_obstacles(Tilemap &tilemap) {
-    for (int x = 0; x < tilemap.width; x++) {
-        for (int y = 0; y < tilemap.height; y++) {
-            auto tile = tilemap.at(x, y);
-            if (tile.has_value()) {
-                obstacles.insert(Location{x, y});
-            }
-        }
-    }
-}
-
-Vec2D Grid::get_size() const {
-    return {static_cast<float>(width), static_cast<float>(height)};
-}
-
-std::unordered_map<Location, Location> breadth_first_search(
-    const Grid &grid, Location start, Location goal) {
-    std::queue<Location> frontier;
+std::unordered_map<Vec2Di, Vec2Di> Grid::breadth_first_search(
+    const Vec2Di &start, const Vec2Di &goal) const {
+    std::queue<Vec2Di> frontier;
     frontier.push(start);
 
-    std::unordered_map<Location, Location> came_from;
+    std::unordered_map<Vec2Di, Vec2Di> came_from;
     came_from[start] = start;
 
     while (!frontier.empty()) {
@@ -80,24 +65,13 @@ std::unordered_map<Location, Location> breadth_first_search(
             break;
         }
 
-        for (auto next : grid.neighbors(current)) {
+        for (auto next : passable_neighbors(current)) {
             if (came_from.find(next) == came_from.end()) {
                 frontier.push(next);
                 came_from[next] = current;
             }
         }
     }
-    return came_from;
-}
 
-std::vector<Location> reconstruct_path(Location start, Location goal,
-    std::unordered_map<Location, Location> came_from) {
-    std::vector<Location> path;
-    Location current = goal;
-    while (current != start) {
-        path.push_back(current);
-        current = came_from[current];
-    }
-    std::reverse(path.begin(), path.end());
-    return path;
+    return came_from;
 }

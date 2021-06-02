@@ -1,35 +1,33 @@
 #pragma once
 
-#include <SDL.h>
 #include <filesystem>
 #include <fstream>
-#include <map>
 #include <optional>
 #include <sstream>
-#include <string>
-#include <vector>
+#include <unordered_map>
 
 #include "math.hpp"
 #include "tileset.hpp"
+#include "util.hpp"
 
-namespace fs = std::filesystem;
-
-class Tilemap {
-public:
-    int width{}, height{};
-    std::vector<std::optional<int>> tiles;
-
-    std::optional<int> at(int x, int y);
+// TODO: Support multiple layers.
+struct Tilemap {
+    Vec2Di size;
+    std::unordered_map<Vec2Di, int> map;
 };
 
-Tilemap load_tilemap(const fs::path &filepath);
-std::map<std::string, Tilemap> load_tilemaps(const fs::path &folder);
+using Tilemaps = std::unordered_map<std::string, Tilemap>;
+
+Tilemap load_tilemap(const std::filesystem::path &path);
+Tilemaps load_tilemaps(const std::filesystem::path &folder);
 
 struct TilemapRender {
-    SDL_Surface *surface{};
-    SDL_Texture *texture{};
+    std::unique_ptr<SDL_Surface, SDL_SurfaceDeleter> surface;
+    std::unique_ptr<SDL_Texture, SDL_TextureDeleter> texture;
 
-    void draw(SDL_Renderer *renderer, const Rect2D &camera);
+    TilemapRender() = default;
+    TilemapRender(
+        SDL_Renderer *renderer, const Tilemap &tilemap, const Tileset &tileset);
+
+    void render(SDL_Renderer *renderer, const Rect2Df &source) const;
 };
-
-TilemapRender render_tilemap(SDL_Renderer *renderer, Tilemap &tm, Tileset &ts);

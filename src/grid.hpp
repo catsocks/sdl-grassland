@@ -1,53 +1,33 @@
-// TODO: Location should be part of Grid.
-// TODO: Location operator functions should be part of itself.
 #pragma once
 
-#include <algorithm>
 #include <array>
-#include <cstdlib>
 #include <queue>
 #include <unordered_map>
 #include <unordered_set>
-#include <vector>
 
 #include "math.hpp"
 #include "tilemap.hpp"
 
-struct Location {
-    int x{}, y{};
+class Grid {
+    Vec2Di size;
+    Vec2Di tile_size;
+    std::array<Vec2Di, 4> directions;
+
+public:
+    std::unordered_set<Vec2Di> static_obstacles;
+    std::unordered_set<Vec2Di> movable_obstacles;
+
+    Grid() = default;
+    Grid(const Vec2Di &size, const Vec2Di &tile_size);
+
+    std::vector<Vec2Di> find_path(
+        const Vec2Di &start, const Vec2Di &goal) const;
+
+    bool passable(const Vec2Di &position) const;
+    bool in_bounds(const Vec2Di &position) const noexcept;
+    std::vector<Vec2Di> passable_neighbors(const Vec2Di &position) const;
+
+private:
+    std::unordered_map<Vec2Di, Vec2Di> breadth_first_search(
+        const Vec2Di &start, const Vec2Di &goal) const;
 };
-
-bool operator==(Location a, Location b);
-bool operator!=(Location a, Location b);
-bool operator<(Location a, Location b);
-
-Location make_location(const Rect2D &r);
-
-// Implement hash function so Location can be put into an unordered_set.
-namespace std {
-template <> struct hash<Location> {
-    size_t operator()(const Location &id) const noexcept {
-        return hash<int>()(id.x ^ (id.y << 4));
-    }
-};
-}
-
-struct Grid {
-    int width{}, height{};
-    std::unordered_set<Location> obstacles;
-
-    Grid(const Tilemap &base);
-
-    bool in_bounds(Location id) const;
-    bool passable(Location id) const;
-    std::vector<Location> neighbors(Location id) const;
-
-    void set_obstacles(Tilemap &tilemap);
-    Vec2D get_size() const;
-};
-
-std::unordered_map<Location, Location> breadth_first_search(
-    const Grid &grid, Location start, Location goal);
-
-std::vector<Location> reconstruct_path(Location start, Location goal,
-    std::unordered_map<Location, Location> came_from);

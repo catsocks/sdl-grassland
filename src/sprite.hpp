@@ -2,41 +2,28 @@
 
 #include <SDL.h>
 
-#include "grid.hpp"
-#include "math.hpp"
 #include "tileset.hpp"
-#include "world.hpp"
 
 class Sprite {
-    static constexpr auto INITIAL_WALK_CYCLE = 1;
-    static constexpr auto WALK_CYCLES = 3; // assumption about tilesets
-    static constexpr auto SIGHT = 6; // range of sight in tiles
+    Tileset tileset;
+    Rect2Di tile_rect;
+    int tile_variant{};
 
 public:
-    enum class Kind { npc, girl };
+    // The defintion of Tile and the value of tile_variant_count is determined
+    // by the format of the character tilesets.
+    enum class Tile { front, left, right, back };
 
-    // Direction order is important for drawing sprites.
-    enum class Direction { down, left, right, up };
+    // For each tile in Tile there are 3 variants.
+    static const int tile_variant_count = 3;
 
-    Rect2D rect;
-    Rect2D dest;
-    Kind kind{};
-    Direction direction{};
-    int walk_cycle = INITIAL_WALK_CYCLE;
+    Sprite(const Tileset &tileset);
 
-    SDL_Texture *texture{};
+    void set_tile(Tile tile, int variant = 0);
+    void rotate_tile(Tile tile);
 
-    Sprite(const Vec2D &pos, const Vec2D &size);
+    void render(SDL_Renderer *renderer, const Rect2Df &dest) const;
 
-    void set_texture(SDL_Renderer *renderer, Tileset &ts);
-
-    bool sees(const Vec2D &distance);
-    void look(Direction dir, bool reset_walk_cycle = false);
-    void look(const Sprite &target, bool reset_walk_cycle = false);
-    void move(World &world, Direction dir, bool ignore_obstacles = false);
-    void move(World &world, const Sprite &target);
-
-    void update(float dt);
-
-    void draw(SDL_Renderer *renderer, const Rect2D &camera);
+private:
+    Tile tile{};
 };

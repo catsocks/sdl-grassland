@@ -1,18 +1,33 @@
 #pragma once
 
 #include <SDL.h>
-#include <vector>
+#include <string>
+#include <unordered_map>
 
+#include "entity.hpp"
 #include "grid.hpp"
-#include "math.hpp"
+#include "tilemap.hpp"
+#include "tileset.hpp"
 
-// TODO: Can this forward declaration be avoided without a circular dependency?
-class Sprite;
+class World {
+    Vec2Di tile_size;
+    TilemapRender background;
+    TilemapRender foreground;
+    Vec2Di size;
+    Rect2Df camera;
+    std::unordered_map<std::string, Entity> entities;
+    Grid grid;
 
-struct World {
-    Rect2D rect;
-    Grid *grid{};
-    std::vector<Sprite *> sprites;
+public:
+    World() = default;
+    World(SDL_Renderer *renderer, const Vec2Di &tile_size,
+        const Vec2Di &renderer_size, const Tilemaps &tilemaps,
+        const Tilesets &tilesets);
 
-    World(const Vec2D &size);
+    void update(const Input &input, double dt);
+    void render(SDL_Renderer *renderer);
+
+private:
+    void update_grid();
+    void handle_player_input(const Input &input, Entity &entity);
 };
