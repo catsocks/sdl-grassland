@@ -1,5 +1,4 @@
 #include "tilemap.hpp"
-#include "tileset.hpp"
 
 std::optional<int> Tilemap::at(int x, int y) {
     return tiles.at(y * width + x);
