@@ -42,8 +42,8 @@ std::map<std::string, Tilemap> load_tilemaps(const fs::path &folder) {
 }
 
 void TilemapRender::draw(SDL_Renderer *renderer, const Rect2D &camera) {
-    SDL_Rect rect = camera;
-    SDL_RenderCopy(renderer, texture, &rect, nullptr);
+    SDL_Rect source = camera;
+    SDL_RenderCopy(renderer, texture, &source, nullptr);
 }
 
 TilemapRender render_tilemap(SDL_Renderer *renderer, Tilemap &tm, Tileset &ts) {
