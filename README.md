@@ -16,9 +16,9 @@ The tilesets used are freely available and are credited in the
 
 ## Gameplay
 
-* <kbd>Up</kbd> <kbd>Down</kbd> <kbd>Left</kbd> <kbd>Right</kbd> Walk
-* <kbd>Shift</kbd> + <kbd>Up</kbd> <kbd>Down</kbd> <kbd>Left</kbd>
-<kbd>Right</kbd> Walk in place
+* <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> Walk
+* <kbd>Shift</kbd> + <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> Walk in
+place
 
 ## Build
 
