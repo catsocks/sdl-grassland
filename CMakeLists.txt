@@ -3,6 +3,8 @@ project(grassland)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # useful for tools like Clang-Tidy
+
 if(MSVC)
   add_compile_options(/W4)
 else()
@@ -36,7 +38,7 @@ set_target_properties(grassland
 target_link_libraries(grassland ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
 
 target_include_directories(grassland PRIVATE ${SDL2_INCLUDE_DIR}
-    ${SDL2_IMAGE_INCLUDE_DIR})
+  ${SDL2_IMAGE_INCLUDE_DIR})
 
 add_custom_command(
   OUTPUT tilemaps
