@@ -28,7 +28,7 @@ Tilemap load_tilemap(const std::filesystem::path &path) {
 
 Tilemaps load_tilemaps(const std::filesystem::path &folder) {
     Tilemaps tilemaps;
-    for (auto &entry : std::filesystem::directory_iterator(folder)) {
+    for (const auto &entry : std::filesystem::directory_iterator(folder)) {
         if (entry.is_directory() || entry.path().extension() != ".csv") {
             continue;
         }

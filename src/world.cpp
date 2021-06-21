@@ -25,7 +25,7 @@ World::World(SDL_Renderer *renderer, const Vec2Di &tile_size,
 
     grid = Grid(size, tile_size);
 
-    for (auto &[key, val] : tilemaps.at("World_Obstacles").map) {
+    for (const auto &[key, val] : tilemaps.at("World_Obstacles").map) {
         grid.static_obstacles.insert(key * tile_size);
     }
 }

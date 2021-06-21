@@ -36,12 +36,12 @@ Tileset load_tileset(SDL_Renderer *renderer, const std::filesystem::path &path,
 Tilesets load_tilesets(SDL_Renderer *renderer,
     const std::filesystem::path &folder, Vec2Di tile_size) {
     Tilesets tilesets;
-    for (auto &entry : std::filesystem::directory_iterator(folder)) {
+    for (const auto &entry : std::filesystem::directory_iterator(folder)) {
         if (entry.is_directory()) {
             continue;
         }
 
-        auto &path = entry.path();
+        const auto &path = entry.path();
         tilesets.insert({path.stem(), load_tileset(renderer, path, tile_size)});
     }
     return tilesets;
