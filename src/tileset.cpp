@@ -1,13 +1,14 @@
 #include "tileset.hpp"
 
+using namespace std::string_literals;
+
 Tileset::Tileset(SDL_Renderer *renderer, SDL_Surface *surface, Vec2Di tile_size)
     : tile_size(tile_size) {
     columns = surface->w / tile_size.x;
 
     auto *texture = SDL_CreateTextureFromSurface(renderer, surface);
     if (texture == nullptr) {
-        throw std::runtime_error(
-            std::string("Couldn't create texture: ") + SDL_GetError());
+        throw std::runtime_error("Couldn't create texture: "s + SDL_GetError());
     }
 
     this->surface = std::unique_ptr<SDL_Surface, SDL_SurfaceDeleter>(surface);
@@ -27,8 +28,7 @@ Tileset load_tileset(SDL_Renderer *renderer, const std::filesystem::path &path,
     Vec2Di tile_size) {
     auto *surface = IMG_Load(path.c_str());
     if (surface == nullptr) {
-        throw std::runtime_error(
-            std::string("Couldn't load tileset: ") + IMG_GetError());
+        throw std::runtime_error("Couldn't load tileset: "s + IMG_GetError());
     }
     return Tileset(renderer, surface, tile_size);
 }

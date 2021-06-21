@@ -1,5 +1,7 @@
 #include "tilemap.hpp"
 
+using namespace std::string_literals;
+
 Tilemap load_tilemap(const std::filesystem::path &path) {
     Tilemap tilemap;
     std::ifstream file(path);
@@ -44,8 +46,7 @@ TilemapRender::TilemapRender(
         tilemap.size.x * tileset.tile_size.x,
         tilemap.size.y * tileset.tile_size.y, 32, SDL_PIXELFORMAT_RGBA32);
     if (surface == nullptr) {
-        throw std::runtime_error(
-            std::string("Couldn't create surface: ") + SDL_GetError());
+        throw std::runtime_error("Couldn't create surface: "s + SDL_GetError());
     }
 
     // Draw tilemap with given tileset.
@@ -63,8 +64,7 @@ TilemapRender::TilemapRender(
 
     auto *texture = SDL_CreateTextureFromSurface(renderer, surface);
     if (texture == nullptr) {
-        throw std::runtime_error(
-            std::string("Couldn't create texture: ") + SDL_GetError());
+        throw std::runtime_error("Couldn't create texture: "s + SDL_GetError());
     }
 
     this->surface = std::unique_ptr<SDL_Surface, SDL_SurfaceDeleter>(surface);
