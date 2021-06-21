@@ -5,7 +5,7 @@
 #include "tileset.hpp"
 
 class Sprite {
-    Tileset tileset;
+    const Tileset &tileset;
     Rect2Di tile_rect;
     int tile_variant{};
 

@@ -10,8 +10,8 @@ Tileset::Tileset(SDL_Renderer *renderer, SDL_Surface *surface, Vec2Di tile_size)
             std::string("Couldn't create texture: ") + SDL_GetError());
     }
 
-    this->surface = std::shared_ptr<SDL_Surface>(surface, SDL_SurfaceDeleter());
-    this->texture = std::shared_ptr<SDL_Texture>(texture, SDL_TextureDeleter());
+    this->surface = std::unique_ptr<SDL_Surface, SDL_SurfaceDeleter>(surface);
+    this->texture = std::unique_ptr<SDL_Texture, SDL_TextureDeleter>(texture);
 }
 
 Rect2Di Tileset::at(int idx) const {

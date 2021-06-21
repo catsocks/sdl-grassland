@@ -14,8 +14,8 @@ class Tileset {
     int columns{};
 
 public:
-    std::shared_ptr<SDL_Surface> surface;
-    std::shared_ptr<SDL_Texture> texture;
+    std::unique_ptr<SDL_Surface, SDL_SurfaceDeleter> surface;
+    std::unique_ptr<SDL_Texture, SDL_TextureDeleter> texture;
     Vec2Di tile_size;
 
     Tileset(SDL_Renderer *renderer, SDL_Surface *surface, Vec2Di tile_size);
