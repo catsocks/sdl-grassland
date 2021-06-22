@@ -98,8 +98,7 @@ $ (cd build && ./grassland)
 Everything with the exception of the contents of the _tilesets_ and cmake
 folders is dedicated to the public domain under the CC0 1.0 Universal license.
 
-## Resources
+## Acknowledgements
 
 * [Introduction to the A* Algorithm](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
 * [Implementation of A](https://www.redblobgames.com/pathfinding/a-star/implementation.html)
-* [APIByCategory - SDL Wiki'](https://wiki.libsdl.org/APIByCategory)
