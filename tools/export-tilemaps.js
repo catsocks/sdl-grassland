@@ -41,6 +41,7 @@ fs.readdirSync(sourceFolder).forEach((file) => {
   const output = path.join(argv.outputFolder, path.basename(file, extname));
   const result = spawnSync(`tiled`, ['--export-map', 'csv', filePath, output]);
   if (result.status !== 0) {
+    const msg = 'Could not use Tiled to export tilemap';
     if (result.stderr) {
       throw new Error(msg + ': ' + result.stderr.toString().trim());
     }
