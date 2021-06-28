@@ -101,4 +101,4 @@ folders is dedicated to the public domain under the CC0 1.0 Universal license.
 ## Acknowledgements
 
 * [Introduction to the A* Algorithm](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
-* [Implementation of A](https://www.redblobgames.com/pathfinding/a-star/implementation.html)
+* [Implementation of A*](https://www.redblobgames.com/pathfinding/a-star/implementation.html)
